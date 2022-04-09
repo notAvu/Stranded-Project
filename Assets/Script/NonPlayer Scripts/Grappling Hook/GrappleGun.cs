@@ -8,11 +8,10 @@ public class GrappleGun : MonoBehaviour
     public GrapplingHook grappleRope;//script de la cuerda 
 
     [Header("Layers Settings:")]//parametros modificables en el editor para testear
-    [SerializeField] private bool grappleToAnything = false;
     [SerializeField] private int grappableLayerNumber = 3;
 
     [Header("Main Camera:")]
-    public Camera m_camera;//Referencia a la camara, revisar para 
+    public Camera m_camera; 
 
     [Header("Transform Ref:")]
     public Transform gunHolder;//Posicion del player (portador)
@@ -23,13 +22,9 @@ public class GrappleGun : MonoBehaviour
     public SpringJoint2D m_springJoint2D;
     public Rigidbody2D m_rigidbody;
 
-    [Header("Rotation:")]
-    [SerializeField] private bool rotateOverTime = true;
-    [Range(0, 60)] [SerializeField] private float rotationSpeed = 4;
-
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;
-    [SerializeField] private float maxDistanec = 20;//distancia maxima que puede recorrer la cuerda
+    [SerializeField] private float maxDistanec = 20;
 
     [SerializeField] private float launchSpeed = 1;//velocidad a la que se lanza el portador hacia el punto 
 
@@ -51,7 +46,9 @@ public class GrappleGun : MonoBehaviour
         else if (Input.GetKey(KeyCode.Mouse0))
         {
             if (grappleRope.enabled)
+            {   
                 RotateGun(grapplePoint);
+            }
             else
             {
                 Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
@@ -88,7 +85,7 @@ public class GrappleGun : MonoBehaviour
 
         if (raycastHasHit)
         {
-            if (raycastHasHit.transform.gameObject.layer == grappableLayerNumber || grappleToAnything)
+            if (raycastHasHit.transform.gameObject.layer == grappableLayerNumber)
             {
                 if (Vector2.Distance(raycastHasHit.point, firePoint.position) <= maxDistanec || !hasMaxDistance)
                 {

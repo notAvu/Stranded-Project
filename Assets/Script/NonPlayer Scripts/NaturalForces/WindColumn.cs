@@ -6,6 +6,7 @@ public class WindColumn : MonoBehaviour
 {
     [SerializeField] private float verticalForce;
     [SerializeField] private float horizontalForce;
+
     // Update is called once per frame
     void Update()
     {

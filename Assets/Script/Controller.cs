@@ -7,7 +7,14 @@ public class Controller : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
-
+    private Animator myAnimator;
+    #region animation variables
+    bool running = false;
+    bool jumping = false;
+    bool falling = false;
+    bool damaged = false;
+    bool dead = false; //probablemente lo descarte y bindee la propiedad a que la vida alcance 0
+    #endregion
     #region X axis Movement variables
     [SerializeField] private CircleCollider2D parryBubble;
     [SerializeField] private float acceleration;      //Example value= 50f
@@ -44,25 +51,35 @@ public class Controller : MonoBehaviour
         horizontalInput = GetInput().x;
         if (Input.GetKey(KeyCode.Z))
         {
-            parryBubble.enabled = true;
-
-        }
-        else
-        {
-            parryBubble.enabled = false;
+            enableBubble();
         }
         CheckGrounded();
     }
+
+    //Method that enables parryBubble and disables it after 10 frames
+    private void enableBubble()
+    {
+        if (!parryBubble.enabled)
+        {
+            //insertar animacion
+            parryBubble.enabled = true;
+            StartCoroutine("disableBubble");
+        }
+    }
+    private void disableBubble()
+    {
+        parryBubble.enabled = false;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //TODO Collider clase concreta o generico?
+
         if (collision.collider.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag.Equals("Enemies"))
         {
-            //collision.
-            collision.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+            //TODO animacion de daño
+            //TODO reducir vida
+            damaged = true;
         }
-        //if (otherCollider.tag.Equals("Enemies"))
-        //{
-        //}
     }
     private void FixedUpdate()
     {
@@ -86,7 +103,8 @@ public class Controller : MonoBehaviour
         if (horizontalInput < 0)
         {
             myRenderer.flipX = true;
-        }else if(horizontalInput > 0)
+        }
+        else if (horizontalInput > 0)
         {
             myRenderer.flipX = false;
         }
@@ -95,6 +113,7 @@ public class Controller : MonoBehaviour
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
         }
+        //myAnimator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
     }
     #endregion
     #region input
@@ -148,14 +167,12 @@ public class Controller : MonoBehaviour
     {
         if (rigidBody.velocity.y < 0)
         {
+            falling = true;
             rigidBody.gravityScale = fallMultiplier;
         }
-        //else if (rigidBody.velocity.y > 0 && !Input.GetKey(KeyCode.Space)) 
-        //{
-        //    rigidBody.gravityScale=lowJumpMultiplier;
-        //}  
         else
         {
+            jumping = true;
             rigidBody.gravityScale = upwardsMultiplier;
         }
     }
@@ -165,7 +182,6 @@ public class Controller : MonoBehaviour
     private void CheckGrounded()
     {
         grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);
-
     }
     /// <summary>
     /// This method is just for visualizing the raycast
@@ -176,6 +192,5 @@ public class Controller : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * raycastLength);
     }
     #endregion
-
 }
 
