@@ -7,6 +7,7 @@ public class Controller : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
+    [SerializeField]
     private Animator myAnimator;
     #region animation variables
     bool running = false;
@@ -113,7 +114,7 @@ public class Controller : MonoBehaviour
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
         }
-        //myAnimator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
+        myAnimator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
     }
     #endregion
     #region input

@@ -961,7 +961,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0699679363d8c0d43a199f382aaef200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parryBubble: {fileID: 0}
+  myAnimator: {fileID: 1562985389}
+  parryBubble: {fileID: 1562985388}
   acceleration: 50
   maxSpeed: 15
   groundLinearDrag: 10
