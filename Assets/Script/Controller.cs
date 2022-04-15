@@ -2,21 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Controller : MonoBehaviour
 {
+    private int lives = 3;
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
     [SerializeField]
     private Animator myAnimator;
-    #region animation variables
-    bool running = false;
-    bool jumping = false;
-    bool falling = false;
-    bool damaged = false;
-    bool dead = false; //probablemente lo descarte y bindee la propiedad a que la vida alcance 0
-    #endregion
     #region X axis Movement variables
+    [SerializeField]
+    private Text uiTextLives;
     [SerializeField] private CircleCollider2D parryBubble;
     [SerializeField] private float acceleration;      //Example value= 50f
     [SerializeField] private float maxSpeed;          //Example value= 12f
@@ -49,7 +47,7 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = GetInput().x;
+        horizontalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).x;
         if (Input.GetKey(KeyCode.Z))
         {
             enableBubble();
@@ -73,13 +71,13 @@ public class Controller : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //TODO Collider clase concreta o generico?
+        //TODO Collider recibe clase concreta o generico?
 
         if (collision.collider.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag.Equals("Enemies"))
         {
             //TODO animacion de daño
-            //TODO reducir vida
-            damaged = true;
+            lives--;
+            uiTextLives.text = lives.ToString();
         }
     }
     private void FixedUpdate()
@@ -101,14 +99,14 @@ public class Controller : MonoBehaviour
     {
 
         rigidBody.AddForce(new Vector2(horizontalInput, 0f) * acceleration);
-        if (horizontalInput < 0)
-        {
-            myRenderer.flipX = true;
-        }
-        else if (horizontalInput > 0)
-        {
-            myRenderer.flipX = false;
-        }
+        //if (horizontalInput < 0)
+        //{
+            myRenderer.flipX = horizontalInput < 0;
+        //}
+        //else if (horizontalInput > 0)
+        //{
+        //    myRenderer.flipX = false;
+        //}
 
         if (Math.Abs(rigidBody.velocity.x) > maxSpeed)
         {
@@ -122,10 +120,7 @@ public class Controller : MonoBehaviour
     /// Gets the user input for the x and y axis
     /// </summary>
     /// <returns></returns>
-    private Vector2 GetInput()
-    {
-        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
+
     #endregion
     #region drag
     /// <summary>
@@ -168,12 +163,11 @@ public class Controller : MonoBehaviour
     {
         if (rigidBody.velocity.y < 0)
         {
-            falling = true;
             rigidBody.gravityScale = fallMultiplier;
         }
         else
         {
-            jumping = true;
+            
             rigidBody.gravityScale = upwardsMultiplier;
         }
     }

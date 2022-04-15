@@ -5,18 +5,18 @@ using UnityEngine;
 public class GrappleGun : MonoBehaviour
 {
     [Header("Scripts Ref:")]
-    public GrapplingHook grappleRope;//script de la cuerda 
+    public GrapplingHook grappleRope;// referencia al script de la cuerda 
 
-    [Header("Layers Settings:")]//parametros modificables en el editor para testear
+    [Header("Layers Settings:")]
     [SerializeField] private int grappableLayerNumber = 3;
 
     [Header("Main Camera:")]
     public Camera m_camera; 
 
     [Header("Transform Ref:")]
-    public Transform gunHolder;//Posicion del player (portador)
-    public Transform gunPivot;//punto de rotacion del grappling gun
-    public Transform firePoint;//punto desde el que se dispara la cuerda
+    public Transform gunHolder;
+    public Transform gunPivot;
+    public Transform firePoint;
 
     [Header("Physics Ref:")]//referencias a componentes del player
     public SpringJoint2D m_springJoint2D;
@@ -26,7 +26,7 @@ public class GrappleGun : MonoBehaviour
     [SerializeField] private bool hasMaxDistance = false;
     [SerializeField] private float maxDistanec = 20;
 
-    [SerializeField] private float launchSpeed = 1;//velocidad a la que se lanza el portador hacia el punto 
+    [SerializeField] private float launchSpeed = 1;//velocidad a la que se lanza el portador hacia el punto de agarre
 
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
