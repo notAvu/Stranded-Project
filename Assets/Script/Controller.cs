@@ -71,14 +71,20 @@ public class Controller : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //TODO Collider recibe clase concreta o generico?
-
-        if (collision.collider.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag.Equals("Enemies"))
+    }
+    public void GetHurt(int hits)
+    {
+        //TODO animacion de daño
+        lives -= hits;
+        Debug.Log("Lives left: " + lives);
+        if (lives <= 0)
         {
-            //TODO animacion de daño
-            lives--;
-            uiTextLives.text = lives.ToString();
+            Debug.Log("Game Over");
+            //set player position to spawn point
+            gameObject.transform.position = new Vector3(0, 0, 0);
+            lives = 3;
         }
+        //uiTextLives.text = lives.ToString();   
     }
     private void FixedUpdate()
     {
@@ -101,7 +107,7 @@ public class Controller : MonoBehaviour
         rigidBody.AddForce(new Vector2(horizontalInput, 0f) * acceleration);
         //if (horizontalInput < 0)
         //{
-            myRenderer.flipX = horizontalInput < 0;
+        myRenderer.flipX = horizontalInput < 0;
         //}
         //else if (horizontalInput > 0)
         //{
@@ -167,7 +173,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            
+
             rigidBody.gravityScale = upwardsMultiplier;
         }
     }
