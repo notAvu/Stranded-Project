@@ -14,7 +14,7 @@ public class Controller : MonoBehaviour
     private Animator myAnimator;
     #region X axis Movement variables
     [SerializeField]
-    private Text uiTextLives;
+    public HealthbarUI healthBar;
     [SerializeField] private CircleCollider2D parryBubble;
     [SerializeField] private float acceleration;      //Example value= 50f
     [SerializeField] private float maxSpeed;          //Example value= 12f
@@ -76,7 +76,7 @@ public class Controller : MonoBehaviour
     {
         //TODO animacion de daño
         lives -= hits;
-        Debug.Log("Lives left: " + lives);
+        Debug.Log("Lives left: " + lives);        
         if (lives <= 0)
         {
             Debug.Log("Game Over");
