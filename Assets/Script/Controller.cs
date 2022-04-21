@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
-    private int lives = 3;
+    [SerializeField]
+    private HealthbarUI healthbar;
+    private int lives = 5;
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
     [SerializeField]
     private Animator myAnimator;
     #region X axis Movement variables
-    [SerializeField]
-    public HealthbarUI healthBar;
     [SerializeField] private CircleCollider2D parryBubble;
     [SerializeField] private float acceleration;      //Example value= 50f
     [SerializeField] private float maxSpeed;          //Example value= 12f
@@ -42,6 +42,7 @@ public class Controller : MonoBehaviour
         parryBubble = GetComponent<CircleCollider2D>();
         myRenderer = GetComponent<SpriteRenderer>();
         //parryBubble.enabled = false;
+        healthbar.SetMaxHealth(lives);
     }
     #region update
     // Update is called once per frame
@@ -82,9 +83,9 @@ public class Controller : MonoBehaviour
             Debug.Log("Game Over");
             //set player position to spawn point
             gameObject.transform.position = new Vector3(0, 0, 0);
-            lives = 3;
+            lives = 5;
         }
-        //uiTextLives.text = lives.ToString();   
+        healthbar.SetHealth(lives);
     }
     private void FixedUpdate()
     {
@@ -173,7 +174,6 @@ public class Controller : MonoBehaviour
         }
         else
         {
-
             rigidBody.gravityScale = upwardsMultiplier;
         }
     }
