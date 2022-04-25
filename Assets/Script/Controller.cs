@@ -55,7 +55,18 @@ public class Controller : MonoBehaviour
         }
         CheckGrounded();
     }
+    private void FixedUpdate()
+    {
+        MoveCharacter();
+        FallMultiplier();
+        ApplyActualDrag();
+        if (Input.GetKey(KeyCode.Space) && grounded)
+        {
+            Jump();
+        }
+    }
 
+    #endregion
     //Method that enables parryBubble and disables it after 10 frames
     private void enableBubble()
     {
@@ -69,9 +80,6 @@ public class Controller : MonoBehaviour
     private void disableBubble()
     {
         parryBubble.enabled = false;
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
     }
     public void GetHurt(int hits)
     {
@@ -87,17 +95,6 @@ public class Controller : MonoBehaviour
         }
         healthbar.SetHealth(lives);
     }
-    private void FixedUpdate()
-    {
-        MoveCharacter();
-        FallMultiplier();
-        ApplyActualDrag();
-        if (Input.GetKey(KeyCode.Space) && grounded)
-        {
-            Jump();
-        }
-    }
-    #endregion
     #region horizontal movement
     /// <summary>
     /// Increases character horizontal speed by its acceleration value
