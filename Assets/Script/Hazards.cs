@@ -5,25 +5,29 @@ using UnityEngine;
 public class Hazards : MonoBehaviour
 {
     [SerializeField]
-    int damage = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private GrappleGun grapple;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    int damage = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Controller>().GetHurt(damage);
-            //call onDisable
+            DealBaseDamage(collision);
+            grapple.Disbable();
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            DealBaseDamage(collision.collider);
+        }
+    }
+    private void DealBaseDamage(Collider2D target)
+    {
+        target.gameObject.GetComponent<Controller>().GetHurt(damage);
+    }    
+
 }

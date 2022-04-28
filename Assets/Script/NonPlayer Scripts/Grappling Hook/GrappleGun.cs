@@ -26,7 +26,8 @@ public class GrappleGun : MonoBehaviour
     [SerializeField] private bool hasMaxDistance = false;
     [SerializeField] private float maxDistanec = 20;
 
-    [SerializeField] private float launchSpeed = 1;//velocidad a la que se lanza el portador hacia el punto de agarre
+    [SerializeField] private float launchSpeed = 0.7f;//velocidad a la que se lanza el portador hacia el punto de agarre
+    [SerializeField] private float activeLaunchSpeed = 2f;//fuerza a la que se lanza el portador hacia el punto de agarre
 
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
@@ -40,9 +41,15 @@ public class GrappleGun : MonoBehaviour
 
     private void Update()
     {
+        //TODO Esto se deberia implementar como un segundo tipo de cuerda que cambie el launchspeed
+        if (Input.GetKey(KeyCode.W))
+            launchSpeed = activeLaunchSpeed;
+        else
+            launchSpeed = 0.7f;
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
             SetGrapplePoint();
-
+        //replace launch speed with active launch speed if the player is holding up
         else if (Input.GetKey(KeyCode.Mouse0))
         {
             if (grappleRope.enabled)
@@ -65,6 +72,16 @@ public class GrappleGun : MonoBehaviour
         {
             Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
             RotateGun(mousePos);
+        }
+        //disable grapple rope if it is too far
+        if (hasMaxDistance)
+        {
+            if (Vector2.Distance(transform.position, grapplePoint) > maxDistanec)
+            {
+                grappleRope.enabled = false;
+                m_springJoint2D.enabled = false;
+                m_rigidbody.gravityScale = 1;
+            }
         }
     }
 
@@ -108,7 +125,12 @@ public class GrappleGun : MonoBehaviour
         m_springJoint2D.frequency = launchSpeed;
         m_springJoint2D.enabled = true;
     }
-
+    public void Disbable()
+    {
+        grappleRope.enabled = false;
+        m_springJoint2D.enabled = false;
+        m_rigidbody.gravityScale = 1;
+    }
     private void OnDrawGizmosSelected()
     {
         if (firePoint != null && hasMaxDistance)

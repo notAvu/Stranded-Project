@@ -7,13 +7,18 @@ using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField]
-    private HealthbarUI healthbar;
-    private int lives = 5;
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
     [SerializeField]
     private Animator myAnimator;
+    #region damage variables
+    [SerializeField]
+    private float damageKnockback = 10f;
+    private LayerMask damageLayer = 6;
+    [SerializeField]
+    private HealthbarUI healthbar;
+    private int lives = 5;
+    #endregion
     #region X axis Movement variables
     [SerializeField] private CircleCollider2D parryBubble;
     [SerializeField] private float acceleration;      //Example value= 50f
@@ -54,6 +59,14 @@ public class Controller : MonoBehaviour
             enableBubble();
         }
         CheckGrounded();
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == damageLayer)
+        {
+            ApplyKnockback(collision);
+        }
     }
     private void FixedUpdate()
     {
@@ -81,6 +94,7 @@ public class Controller : MonoBehaviour
     {
         parryBubble.enabled = false;
     }
+    #region damage
     public void GetHurt(int hits)
     {
         //TODO animacion de daño
@@ -88,29 +102,27 @@ public class Controller : MonoBehaviour
         Debug.Log("Lives left: " + lives);        
         if (lives <= 0)
         {
-            Debug.Log("Game Over");
             //set player position to spawn point
             gameObject.transform.position = new Vector3(0, 0, 0);
             lives = 5;
         }
         healthbar.SetHealth(lives);
     }
+    public void ApplyKnockback(Collision2D collision)
+    {
+        Vector2 force = new Vector2(collision.contacts[0].normal.x, collision.contacts[0].normal.y) * damageKnockback;
+        rigidBody.AddForce(force, ForceMode2D.Impulse);
+    }
+    #endregion
     #region horizontal movement
     /// <summary>
     /// Increases character horizontal speed by its acceleration value
     /// </summary>
     private void MoveCharacter()
     {
-
         rigidBody.AddForce(new Vector2(horizontalInput, 0f) * acceleration);
-        //if (horizontalInput < 0)
-        //{
         myRenderer.flipX = horizontalInput < 0;
-        //}
-        //else if (horizontalInput > 0)
-        //{
-        //    myRenderer.flipX = false;
-        //}
+
 
         if (Math.Abs(rigidBody.velocity.x) > maxSpeed)
         {
