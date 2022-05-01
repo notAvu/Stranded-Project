@@ -467,6 +467,7 @@ GameObject:
   - component: {fileID: 181092725}
   - component: {fileID: 181092724}
   - component: {fileID: 181092723}
+  - component: {fileID: 181092728}
   m_Layer: 6
   m_Name: EyeBall Monster-Sheet_0
   m_TagString: Untagged
@@ -600,6 +601,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181092728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181092722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe944972078842b41bd103d30ce2bda2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &294815746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,7 +1291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 248.25}
+  m_AnchoredPosition: {x: -500, y: 248.25}
   m_SizeDelta: {x: 470.67, y: 142.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &640429229
@@ -10403,7 +10416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -400, y: 250.5}
+  m_AnchoredPosition: {x: -500, y: 250.5}
   m_SizeDelta: {x: 4.59, y: -79.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275730380

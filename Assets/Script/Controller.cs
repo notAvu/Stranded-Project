@@ -97,9 +97,8 @@ public class Controller : MonoBehaviour
     #region damage
     public void GetHurt(int hits)
     {
-        //TODO animacion de daño
+        myAnimator.SetTrigger("TakeDamage");
         lives -= hits;
-        Debug.Log("Lives left: " + lives);        
         if (lives <= 0)
         {
             //set player position to spawn point
