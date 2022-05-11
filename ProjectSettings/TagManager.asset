@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WindUpwards
   - Enemies
+  - Shield
   layers:
   - Default
   - TransparentFX

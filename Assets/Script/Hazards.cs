@@ -20,14 +20,14 @@ public class Hazards : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "Player")
-        {
             DealBaseDamage(collision.collider);
-        }
+
     }
     private void DealBaseDamage(Collider2D target)
     {
         target.gameObject.GetComponent<Controller>().GetHurt(damage);
-    }    
+    }
 
 }

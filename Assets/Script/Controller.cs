@@ -20,7 +20,8 @@ public class Controller : MonoBehaviour
     private int lives = 5;
     #endregion
     #region X axis Movement variables
-    [SerializeField] private CircleCollider2D parryBubble;
+    [SerializeField] private GameObject parryBubble;
+    private int activeFrames = 0;
     [SerializeField] private float acceleration;      //Example value= 50f
     [SerializeField] private float maxSpeed;          //Example value= 12f
     [SerializeField] private float groundLinearDrag;  //Example value= 10f
@@ -44,7 +45,6 @@ public class Controller : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        parryBubble = GetComponent<CircleCollider2D>();
         myRenderer = GetComponent<SpriteRenderer>();
         //parryBubble.enabled = false;
         healthbar.SetMaxHealth(lives);
@@ -54,11 +54,20 @@ public class Controller : MonoBehaviour
     void Update()
     {
         horizontalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).x;
-        if (Input.GetKey(KeyCode.Z))
+        if (activeFrames > 0)
+            activeFrames--;
+        if (Input.GetKeyDown(KeyCode.Z) && activeFrames <= 0)
         {
-            enableBubble();
+            activeFrames = 60;
+            //myAnimator.SetTrigger("Parry");
+            EnableBubble();
+        }
+        if (parryBubble.GetComponent<CircleCollider2D>().enabled == true && activeFrames <= 20)
+        {
+            DisableBubble();
         }
         CheckGrounded();
+        Debug.Log(activeFrames);
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -81,18 +90,18 @@ public class Controller : MonoBehaviour
 
     #endregion
     //Method that enables parryBubble and disables it after 10 frames
-    private void enableBubble()
+    private void EnableBubble()
     {
-        if (!parryBubble.enabled)
+        if (!parryBubble.GetComponent<CircleCollider2D>().enabled)
         {
-            //insertar animacion
-            parryBubble.enabled = true;
-            StartCoroutine("disableBubble");
+            parryBubble.GetComponent<CircleCollider2D>().enabled = true;
+            parryBubble.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
-    private void disableBubble()
+    private void DisableBubble()
     {
-        parryBubble.enabled = false;
+        parryBubble.GetComponent<CircleCollider2D>().enabled = false;
+        parryBubble.GetComponent<SpriteRenderer>().enabled = false;
     }
     #region damage
     public void GetHurt(int hits)
