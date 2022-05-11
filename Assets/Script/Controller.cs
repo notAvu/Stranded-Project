@@ -202,7 +202,7 @@ public class Controller : MonoBehaviour
         grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);
     }
     /// <summary>
-    /// This method is just for visualizing the raycast
+    /// This method is just for visualizing the raycast that detects collisions with the ground
     /// </summary>
     private void OnDrawGizmos()
     {

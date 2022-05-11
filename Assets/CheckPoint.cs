@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject player;
+    void Save()
     {
+        //save the player position and store it in a file 
+        PlayerPrefs.SetFloat("x", player.transform.position.x);
+        PlayerPrefs.SetFloat("y", player.transform.position.y);
+        PlayerPrefs.SetFloat("z", player.transform.position.z);
         
     }
 
-    // Update is called once per frame
-    void Update()
+    void Load()
     {
-        
+        player.transform.position = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
     }
 }

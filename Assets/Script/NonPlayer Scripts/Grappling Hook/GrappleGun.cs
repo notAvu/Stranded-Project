@@ -85,7 +85,10 @@ public class GrappleGun : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// sets the gun's rotation variable to the angle between the lookPoint and the x axis of the player
+    /// </summary>
+    /// <param name="lookPoint">The current position of the mouse</param>
     void RotateGun(Vector3 lookPoint)
     {
         Vector3 distanceVector = lookPoint - gunPivot.position;
@@ -95,6 +98,9 @@ public class GrappleGun : MonoBehaviour
         gunPivot.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
     }
+    /// <summary>
+    /// sets the grapple point to the intersection between the first grappable element in the scene and the mouse position
+    /// </summary>
     void SetGrapplePoint()
     {
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
@@ -113,6 +119,9 @@ public class GrappleGun : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Enables the grappling rope and sets the joint's anchor to the grapple point
+    /// </summary>
     public void Grapple()
     {
         m_springJoint2D.autoConfigureDistance = false;
@@ -125,6 +134,9 @@ public class GrappleGun : MonoBehaviour
         m_springJoint2D.frequency = launchSpeed;
         m_springJoint2D.enabled = true;
     }
+    /// <summary>
+    /// Disables the grappling rope
+    /// </summary>
     public void Disbable()
     {
         grappleRope.enabled = false;
