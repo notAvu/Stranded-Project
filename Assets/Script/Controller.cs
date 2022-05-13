@@ -17,7 +17,7 @@ public class Controller : MonoBehaviour
     private LayerMask damageLayer = 6;
     [SerializeField]
     private HealthbarUI healthbar;
-    private int lives = 5;
+    public int Lives { get; set; } = 5;
     #endregion
     #region X axis Movement variables
     [SerializeField] private GameObject parryBubble;
@@ -47,7 +47,7 @@ public class Controller : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
         //parryBubble.enabled = false;
-        healthbar.SetMaxHealth(lives);
+        healthbar.SetMaxHealth(Lives);
     }
     #region update
     // Update is called once per frame
@@ -107,14 +107,14 @@ public class Controller : MonoBehaviour
     public void GetHurt(int hits)
     {
         myAnimator.SetTrigger("TakeDamage");
-        lives -= hits;
-        if (lives <= 0)
+        Lives -= hits;
+        if (Lives <= 0)
         {
             //set player position to spawn point
             gameObject.transform.position = new Vector3(0, 0, 0);
-            lives = 5;
+            Lives = 5;
         }
-        healthbar.SetHealth(lives);
+        healthbar.SetHealth(Lives);
     }
     public void ApplyKnockback(Collision2D collision)
     {
