@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+[System.Serializable]
+public class PlayerData 
 {
-    public float[] playerPosition;
-    public float playerLives;
+    public float[] PlayerPosition { get; set; }
+    public int PlayerLives { get; set; }
 
     public PlayerData(Controller player)
     {
         // fill player data
-        playerPosition = new float[3];
-        playerPosition[0] = player.transform.position.x;
-        playerPosition[1] = player.transform.position.y;
-        playerPosition[2] = player.transform.position.z;
-        playerLives = player.Lives;
+        PlayerPosition = new float[3];
+        PlayerPosition[0] = player.transform.position.x;
+        PlayerPosition[1] = player.transform.position.y;
+        PlayerPosition[2] = player.transform.position.z;
+        PlayerLives = player.Lives;
     }
 }

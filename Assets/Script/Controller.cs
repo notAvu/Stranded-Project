@@ -9,9 +9,10 @@ public class Controller : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
+    private BoxCollider2D playerCollider;
     [SerializeField]
     private Animator myAnimator;
-    #region damage variables
+    #region  variables
     [SerializeField]
     private float damageKnockback = 10f;
     private LayerMask damageLayer = 6;
@@ -46,9 +47,34 @@ public class Controller : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
         //parryBubble.enabled = false;
         healthbar.SetMaxHealth(Lives);
+        LoadState();
     }
+    #region Loading and Saving
+    /// <summary>
+    /// Saves the current state of the player on a binary file 
+    /// </summary>
+    public void SaveState()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+    /// <summary>
+    /// Loads the player state stored in the SaveSystem class
+    /// </summary>
+    public void LoadState()
+    {
+        PlayerData playerInfo = SaveSystem.LoadPlayer();
+        if (playerInfo != null)
+        {
+            Lives = playerInfo.PlayerLives;
+            healthbar.SetHealth(Lives);
+            this.transform.position = new Vector3(playerInfo.PlayerPosition[0], playerInfo.PlayerPosition[1], playerInfo.PlayerPosition[2]);
+            Debug.Log("Player loaded from fun file");
+        }
+    }
+    #endregion
     #region update
     // Update is called once per frame
     void Update()
@@ -59,11 +85,12 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && activeFrames <= 0)
         {
             activeFrames = 60;
-            //myAnimator.SetTrigger("Parry");
+            playerCollider.enabled = false;
             EnableBubble();
         }
         if (parryBubble.GetComponent<CircleCollider2D>().enabled == true && activeFrames <= 20)
         {
+            playerCollider.enabled = true;
             DisableBubble();
         }
         CheckGrounded();
@@ -110,9 +137,9 @@ public class Controller : MonoBehaviour
         Lives -= hits;
         if (Lives <= 0)
         {
-            //set player position to spawn point
-            gameObject.transform.position = new Vector3(0, 0, 0);
             Lives = 5;
+            Debug.Log("Player died");
+            LoadState();
         }
         healthbar.SetHealth(Lives);
     }
@@ -129,7 +156,10 @@ public class Controller : MonoBehaviour
     private void MoveCharacter()
     {
         rigidBody.AddForce(new Vector2(horizontalInput, 0f) * acceleration);
-        myRenderer.flipX = horizontalInput < 0;
+        if (horizontalInput != 0f)
+        {
+            myRenderer.flipX = horizontalInput < 0f;
+        }
 
 
         if (Math.Abs(rigidBody.velocity.x) > maxSpeed)
@@ -174,6 +204,7 @@ public class Controller : MonoBehaviour
     }
     #endregion
     #region jumping
+
     private void Jump()
     {
         ApplyActualDrag();
@@ -211,4 +242,3 @@ public class Controller : MonoBehaviour
     }
     #endregion
 }
-

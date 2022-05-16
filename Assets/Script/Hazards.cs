@@ -8,7 +8,7 @@ public class Hazards : MonoBehaviour
     private GrappleGun grapple;
 
     [SerializeField]
-    int damage = 1;
+    private int Damage = 5;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,16 +18,10 @@ public class Hazards : MonoBehaviour
             grapple.Disbable();
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        if (collision.gameObject.tag == "Player")
-            DealBaseDamage(collision.collider);
-
-    }
+    
     private void DealBaseDamage(Collider2D target)
     {
-        target.gameObject.GetComponent<Controller>().GetHurt(damage);
+        target.gameObject.GetComponent<Controller>().GetHurt(Damage);
     }
 
 }

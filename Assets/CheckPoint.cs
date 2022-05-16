@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public GameObject player;
-    void Save()
+    public Controller player;
+    void SavePlayer()
     {
-        //save the player position and store it in a file 
-        PlayerPrefs.SetFloat("x", player.transform.position.x);
-        PlayerPrefs.SetFloat("y", player.transform.position.y);
-        PlayerPrefs.SetFloat("z", player.transform.position.z);
-
+        player.SaveState();
     }
 
-    void Load()
+    void LoadPlayer()
     {
-        player.transform.position = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
+        player.LoadState();
     }
-    //call save function on trigger enter
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            Save();
+            SavePlayer();
+            Debug.Log("Save Triggered");
         }
     }
 }
