@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Controller : MonoBehaviour
@@ -42,6 +42,13 @@ public class Controller : MonoBehaviour
     private bool grounded;
 
     #endregion
+    private void OnEnable()
+    {
+        if (SaveSystem.LoadPlayer() == null)
+        {
+            SaveState();
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +65,7 @@ public class Controller : MonoBehaviour
     /// </summary>
     public void SaveState()
     {
+
         SaveSystem.SavePlayer(this);
     }
     /// <summary>

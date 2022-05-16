@@ -7,6 +7,8 @@ TagManager:
   - WindUpwards
   - Enemies
   - Shield
+  - EndDoor
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

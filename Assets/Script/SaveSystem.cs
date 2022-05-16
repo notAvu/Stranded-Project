@@ -6,24 +6,20 @@ public static class SaveSystem
 {
     public static void SavePlayer(Controller player)
     {
-        string path = Path.Combine(Application.persistentDataPath, "playerInfo.pene");
-        if (!File.Exists(path))
-        {
-            File.Create(path).Dispose();
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Create);
+        string path = Path.Combine(Application.persistentDataPath, "playerInfo.basado");
+        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+        BinaryFormatter formatter = new BinaryFormatter();
+        PlayerData data = new PlayerData(player);
+        formatter.Serialize(stream, data);
+        stream.Close();
 
-            PlayerData data = new PlayerData(player);
-
-            formatter.Serialize(stream, data);
-            stream.Close();
-        }
     }
+
 
     public static PlayerData LoadPlayer()
     {
         PlayerData data = null;
-        string path = Path.Combine(Application.persistentDataPath, "playerInfo.pene");
+        string path = Path.Combine(Application.persistentDataPath, "playerInfo.basado");
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -34,10 +30,10 @@ public static class SaveSystem
 
             return data;
         }
-        else
-        {
-            Debug.LogError("Save file not found in " + path);
-        }
+        //else
+        //{
+        //    File.Create(path).Dispose();
+        //}
         return data;
     }
 }

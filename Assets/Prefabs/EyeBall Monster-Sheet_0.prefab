@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9214616432015333048}
   - component: {fileID: 9214616432015333051}
   - component: {fileID: 9214616432015333050}
-  - component: {fileID: 9214616432015333053}
   - component: {fileID: 9214616432015333046}
   m_Layer: 6
   m_Name: EyeBall Monster-Sheet_0
@@ -133,20 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.12316789, y: 0.14}
   m_EdgeRadius: 0
---- !u!114 &9214616432015333053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9214616432015333052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f8a73de05eace74dab8787b4a917c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grapple: {fileID: 0}
-  damage: 1
 --- !u!114 &9214616432015333046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +144,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe944972078842b41bd103d30ce2bda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grapple: {fileID: 0}

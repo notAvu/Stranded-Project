@@ -8,7 +8,7 @@ public class Hazards : MonoBehaviour
     private GrappleGun grapple;
 
     [SerializeField]
-    private int Damage = 5;
+    private int Damage;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
