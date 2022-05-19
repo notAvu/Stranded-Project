@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class parry : MonoBehaviour
+public class Parry : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {

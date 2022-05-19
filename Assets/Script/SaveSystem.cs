@@ -14,8 +14,23 @@ public static class SaveSystem
         stream.Close();
 
     }
-
-
+    public static bool FileExists()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "playerInfo.basado");
+        return File.Exists(path);
+    }
+    public static void DeleteFile()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "playerInfo.basado");
+        try
+        {
+            File.Delete(path);
+        }
+        catch
+        {
+            Debug.Log("No se ha podido borrar el archivo");
+        }
+    }
     public static PlayerData LoadPlayer()
     {
         PlayerData data = null;
@@ -30,10 +45,6 @@ public static class SaveSystem
 
             return data;
         }
-        //else
-        //{
-        //    File.Create(path).Dispose();
-        //}
         return data;
     }
 }
