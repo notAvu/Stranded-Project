@@ -8,6 +8,7 @@ public class GroundEnemy : MonoBehaviour
     [SerializeField]
     private GrappleGun grapple;
     private Rigidbody2D rb;
+    [SerializeField]
     private float maxSpeed=1.6f;
     
     private Transform currentPosition;
