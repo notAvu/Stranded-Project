@@ -102,7 +102,7 @@ public class Controller : MonoBehaviour
             DisableBubble();
         }
         CheckGrounded();
-        Debug.Log(activeFrames);
+
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -218,6 +218,7 @@ public class Controller : MonoBehaviour
         ApplyActualDrag();
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f);
         rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        myAnimator.SetTrigger("Jump");
     }
     /// <summary>
     /// Applies forces to the falling part of the character's jump arc to make it feel less floaty

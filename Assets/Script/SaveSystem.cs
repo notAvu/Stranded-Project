@@ -12,7 +12,6 @@ public static class SaveSystem
         PlayerData data = new PlayerData(player);
         formatter.Serialize(stream, data);
         stream.Close();
-
     }
     public static bool FileExists()
     {

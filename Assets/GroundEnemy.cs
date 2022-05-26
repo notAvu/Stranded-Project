@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class GroundEnemy : MonoBehaviour
 {
-    [SerializeField]
-    private GrappleGun grapple;
     private Rigidbody2D rb;
     [SerializeField]
-    private float maxSpeed=1.6f;
-    
+    private float maxSpeed = 1.6f;
+
     private Transform currentPosition;
     private float initialPositionX;
     private float initialPositionY;
@@ -24,8 +22,12 @@ public class GroundEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.collider.gameObject.GetComponent<Controller>().GetHurt(Damage);
-            grapple.Disbable();
+            collision.gameObject.GetComponentInChildren<GrappleGun>().Disbable();
+            if (collision.collider.gameObject.GetComponent<Controller>() != null)
+            {
+                collision.collider.gameObject.GetComponent<Controller>().GetHurt(Damage);
+            }
+            Debug.Log("Hurt");
         }
     }
     private void Start()
@@ -39,7 +41,7 @@ public class GroundEnemy : MonoBehaviour
     {
         Patrol();
     }
-    int direction=1;
+    int direction = 1;
     private void Patrol()
     {
         if (transform.position.x >= finalPositionX)
