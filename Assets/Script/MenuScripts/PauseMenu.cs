@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,9 +11,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] 
     [Header("Main Menu Scene")]
     public string MAIN_MENU_NAME = "MainMenu";
+    //private void Awake()
+    //{
+    //    DontDestroyOnLoad(this);
+    //}
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !SceneManager.GetActiveScene().name.Equals(MAIN_MENU_NAME))
         {
             if (GameIsPaused)
             {
@@ -49,7 +54,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_NAME);
+       SceneManager.LoadScene(MAIN_MENU_NAME);
     }
     /// <summary>
     /// This method quits the game. Did this actually need an explaination?

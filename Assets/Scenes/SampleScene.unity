@@ -619,6 +619,7 @@ MonoBehaviour:
   hasMaxDistance: 1
   maxDistanec: 20
   launchSpeed: 1
+  activeLaunchSpeed: 2
   grapplePoint: {x: 0, y: 0}
   grappleDistanceVector: {x: 0, y: 0}
 --- !u!1 &1270615672
@@ -814,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!231 &1562985382
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -962,6 +963,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 1562985389}
+  damageKnockback: 10
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 6
+  healthbar: {fileID: 0}
+  maxHealth: 5
+  invulSeconds: 1
   parryBubble: {fileID: 1562985388}
   acceleration: 50
   maxSpeed: 15

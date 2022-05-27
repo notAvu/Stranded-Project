@@ -47,6 +47,10 @@ public class Controller : MonoBehaviour
     private float raycastLength = 1f;
     private bool grounded;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
     #endregion
     private void OnEnable()
     {
