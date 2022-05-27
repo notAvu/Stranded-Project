@@ -15,14 +15,20 @@ public class Controller : MonoBehaviour
     #region  variables
     [SerializeField]
     private float damageKnockback = 10f;
+    [SerializeField]
     private LayerMask damageLayer = 6;
     [SerializeField]
     private HealthbarUI healthbar;
+    [SerializeField]
+    private int maxHealth = 5;
+    [SerializeField]
+    private float invulSeconds = 1f;
+    private bool isInvulnerable;
     public int Lives { get; set; } = 5;
     #endregion
     #region X axis Movement variables
     [SerializeField] private GameObject parryBubble;
-    private int activeFrames = 0;
+    private float activeFrames = 0;
     [SerializeField] private float acceleration;      //Example value= 50f
     [SerializeField] private float maxSpeed;          //Example value= 12f
     [SerializeField] private float groundLinearDrag;  //Example value= 10f
@@ -55,7 +61,6 @@ public class Controller : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
-        //parryBubble.enabled = false;
         healthbar.SetMaxHealth(Lives);
         LoadState();
     }
@@ -65,7 +70,6 @@ public class Controller : MonoBehaviour
     /// </summary>
     public void SaveState()
     {
-
         SaveSystem.SavePlayer(this);
     }
     /// <summary>
@@ -88,22 +92,35 @@ public class Controller : MonoBehaviour
     void Update()
     {
         horizontalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).x;
-        if (activeFrames > 0)
+        ExecuteParry();
+        CheckGrounded();
+    }
+    /// <summary>
+    /// This methods checks if the player is able to parry and is inputing the parry button, if so enables the parry bubble.
+    /// Once active the parry bubble will be disabled after a set amount of time.
+    /// 
+    /// -- TODO : Set parry enabling/disabling to a corroutine -- 
+    /// </summary>
+    private void ExecuteParry()
+    {
+        if (activeFrames > 0f)
             activeFrames--;
-        if (Input.GetKeyDown(KeyCode.Z) && activeFrames <= 0)
+        if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.DownArrow)) && activeFrames <= 0f)
         {
-            activeFrames = 60;
+            activeFrames = 60f;
             playerCollider.enabled = false;
             EnableBubble();
         }
-        if (parryBubble.GetComponent<CircleCollider2D>().enabled == true && activeFrames <= 20)
+        if (parryBubble.GetComponent<CircleCollider2D>().enabled && activeFrames <= 20f)
         {
             playerCollider.enabled = true;
             DisableBubble();
         }
-        CheckGrounded();
-
-
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Checkpoint"))
+            SaveState();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -117,14 +134,16 @@ public class Controller : MonoBehaviour
         MoveCharacter();
         FallMultiplier();
         ApplyActualDrag();
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && grounded)
         {
             Jump();
         }
     }
 
     #endregion
-    //Method that enables parryBubble and disables it after 10 frames
+    /// <summary>
+    /// If parry bubble is not enabled it enalbles it and makes it visible.
+    /// </summary>
     private void EnableBubble()
     {
         if (!parryBubble.GetComponent<CircleCollider2D>().enabled)
@@ -133,33 +152,61 @@ public class Controller : MonoBehaviour
             parryBubble.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
+    /// <summary>
+    /// disables the parry bubble and makes it invisible.
+    /// </summary>
     private void DisableBubble()
     {
         parryBubble.GetComponent<CircleCollider2D>().enabled = false;
         parryBubble.GetComponent<SpriteRenderer>().enabled = false;
     }
     #region damage
+    /// <summary>
+    /// This method triggers the animation for taking damage. Then reduces the player's health by the hits parameter
+    /// and checks if life has reached zero, and if it did it loads the last saved state and sets the number of 
+    /// layers to the player's starting lives.
+    /// </summary>
+    /// <param name="hits"></param>
     public void GetHurt(int hits)
     {
-        myAnimator.SetTrigger("TakeDamage");
-        Lives -= hits;
-        if (Lives <= 0)
+        if (!isInvulnerable)
         {
-            Lives = 5;
-            Debug.Log("Player died");
-            LoadState();
+            myAnimator.SetTrigger("TakeDamage");
+            Lives -= hits;
+            if (Lives <= 0)
+            {
+                Lives = maxHealth;
+                LoadState();
+            }
+            StartCoroutine(BecomeInbulnerable());
+            healthbar.SetHealth(Lives);
         }
-        healthbar.SetHealth(Lives);
     }
+    /// <summary>
+    /// This method pushes the player back after being hit.
+    /// The force applied is based on the direction of the collision.
+    /// </summary>
+    /// <param name="collision"></param>
     public void ApplyKnockback(Collision2D collision)
     {
         Vector2 force = new Vector2(collision.contacts[0].normal.x, collision.contacts[0].normal.y) * damageKnockback;
         rigidBody.AddForce(force, ForceMode2D.Impulse);
     }
+    /// <summary>
+    /// this method makes the player invulnerable for a set amount of time .
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator BecomeInbulnerable()
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulSeconds);
+        isInvulnerable = false;
+    }
     #endregion
     #region horizontal movement
     /// <summary>
-    /// Increases character horizontal speed by its acceleration value
+    /// Increases character horizontal speed by its acceleration value up to the value of maxSpeed.
+    /// The player's sprite is flipped depending on the direction of movement.
     /// </summary>
     private void MoveCharacter()
     {
@@ -169,20 +216,12 @@ public class Controller : MonoBehaviour
             myRenderer.flipX = horizontalInput < 0f;
         }
 
-
         if (Math.Abs(rigidBody.velocity.x) > maxSpeed)
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
         }
         myAnimator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
     }
-    #endregion
-    #region input
-    /// <summary>
-    /// Gets the user input for the x and y axis
-    /// </summary>
-    /// <returns></returns>
-
     #endregion
     #region drag
     /// <summary>
@@ -199,6 +238,10 @@ public class Controller : MonoBehaviour
             ApplyDrag(airLinearDrag);
         }
     }
+    /// <summary>
+    /// Applies a given drag to the player's rigidbody if it's .
+    /// </summary>
+    /// <param name="dragValue"></param>
     private void ApplyDrag(float dragValue)
     {
         if (Math.Abs(horizontalInput) < 0.4f || changinDirection)
@@ -213,6 +256,9 @@ public class Controller : MonoBehaviour
     #endregion
     #region jumping
 
+    /// <summary>
+    /// Pushes the player upwards to make it jump andtriggers the jump animation
+    /// </summary>
     private void Jump()
     {
         ApplyActualDrag();

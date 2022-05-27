@@ -14,12 +14,10 @@ public class WindColumn : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //apply a force to the player equal to the wind's vertical force
-        other.GetComponent<Rigidbody2D>().AddForce(new Vector2(horizontalForce, verticalForce));
-        //other.attachedRigidbody.AddForce(new Vector2(horizontalForce, verticalForce));
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        
+        other.GetComponent<Rigidbody2D>().AddForce(new Vector2(horizontalForce, verticalForce));
+
     }
 }

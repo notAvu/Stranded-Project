@@ -7,25 +7,33 @@ public class MainMenuScripts : MonoBehaviour
 {
     [SerializeField]
     private GameObject loadGameButton;
-    //make button visible when the scene is loaded
     void Start()
     {
-        if (SaveSystem.FileExists())
+        if (SaveSystem.FileExists)
             loadGameButton.SetActive(true);
     }
-    //method that loads a game scene given its name
+    /// <summary>
+    /// Loads a scene given its name
+    /// </summary>
+    /// <param name="scene">The name of the scene you want to load</param>
     public void LoadScene(string scene)
     {
         Debug.Log("Loading scene: " + scene);
         SceneManager.LoadScene(scene);
     }
-    //method that quits the game 
+    /// <summary>
+    /// Does this actually need an explaination?
+    /// </summary>
     public void QuitGame()
     {
         Debug.Log("Quitting game");
         Application.Quit();
     }
-    //method that deletes saved data and loads a given scene
+    /// <summary>
+    /// Calls the save system's method to delete the save file
+    /// And then loads a given scene
+    /// </summary>
+    /// <param name="scene">The name of the scene you want to load</param>
     public void DeleteData(string scene)
     {
         Debug.Log("Deleting data");

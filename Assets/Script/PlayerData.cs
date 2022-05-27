@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to store the necesasary data of a player object for later loading of its state.
+/// </summary>
 [System.Serializable]
 public class PlayerData 
 {
@@ -10,7 +13,6 @@ public class PlayerData
 
     public PlayerData(Controller player)
     {
-        // fill player data
         PlayerPosition = new float[3];
         PlayerPosition[0] = player.transform.position.x;
         PlayerPosition[1] = player.transform.position.y;

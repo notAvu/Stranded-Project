@@ -674,7 +674,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 350571851}
   damageKnockback: 10
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 6
   healthbar: {fileID: 1953986947}
+  maxHealth: 5
+  invulSeconds: 1
   parryBubble: {fileID: 1605680103}
   acceleration: 40
   maxSpeed: 10
@@ -70166,7 +70171,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7896134451954853582, guid: 0bbb153d7c645f746aa02290fc9fd923, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0bbb153d7c645f746aa02290fc9fd923, type: 3}
 --- !u!1 &1555784582 stripped
 GameObject:
@@ -86181,7 +86187,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7693567838320121330, guid: 0bbb153d7c645f746aa02290fc9fd923, type: 3}
+      propertyPath: m_TagString
+      value: Checkpoint
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7896134451954853582, guid: 0bbb153d7c645f746aa02290fc9fd923, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0bbb153d7c645f746aa02290fc9fd923, type: 3}
 --- !u!1001 &9214616432104118222
 PrefabInstance:
@@ -86244,6 +86255,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9214616432015333049, guid: 0ca0522e0907f764aa771004cf066bca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9214616432015333051, guid: 0ca0522e0907f764aa771004cf066bca, type: 3}
+      propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9214616432015333052, guid: 0ca0522e0907f764aa771004cf066bca, type: 3}

@@ -24,28 +24,36 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// This method closes the pause menu and resumes the game
+    /// </summary>
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
-
+    /// <summary>
+    /// This method pauses the game and opens the pause menu
+    /// </summary>
     void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-
+    /// <summary>
+    /// This method leads the player to the main menu scene
+    /// </summary>
     public void LoadMenu()
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_NAME);
     }
-
+    /// <summary>
+    /// This method quits the game. Did this actually need an explaination?
+    /// </summary>
     public void QuitGame()
     {
         Application.Quit();
