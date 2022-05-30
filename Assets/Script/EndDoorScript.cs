@@ -14,6 +14,7 @@ public class EndDoorScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             SceneManager.LoadScene(nextScene, LoadSceneMode.Single);
+            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(nextScene));
         }
     }
 }

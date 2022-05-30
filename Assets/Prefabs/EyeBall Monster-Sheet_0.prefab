@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &9214616432015333050
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -145,10 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe944972078842b41bd103d30ce2bda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 9214616432015333051}
   maxSpeed: 1.6
   finalPositionX: 0
-  finalPositionY: 0
 --- !u!95 &5444627464122547009
 Animator:
   serializedVersion: 3

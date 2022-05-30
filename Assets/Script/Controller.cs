@@ -17,7 +17,6 @@ public class Controller : MonoBehaviour
     private float damageKnockback = 10f;
     [SerializeField]
     private LayerMask damageLayer = 6;
-    [SerializeField]
     private HealthbarUI healthbar;
     [SerializeField]
     private int maxHealth = 5;
@@ -46,22 +45,21 @@ public class Controller : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private float raycastLength = 1f;
     private bool grounded;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
+    private readonly Vector3 INITIAL_POSITION = new Vector3(0, 0, -10);
+    private Vector3 lastPosition;
     #endregion
     private void OnEnable()
     {
         if (SaveSystem.LoadPlayer() == null)
         {
             SaveState();
+            lastPosition = INITIAL_POSITION;
         }
     }
     // Start is called before the first frame update
     void Start()
     {
+        healthbar = FindObjectOfType<HealthbarUI>();
         rigidBody = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
@@ -75,6 +73,8 @@ public class Controller : MonoBehaviour
     public void SaveState()
     {
         SaveSystem.SavePlayer(this);
+        if (lastPosition != INITIAL_POSITION)
+            lastPosition = transform.position;
     }
     /// <summary>
     /// Loads the player state stored in the SaveSystem class
@@ -124,14 +124,23 @@ public class Controller : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals("Checkpoint"))
+        {
             SaveState();
+            lastPosition = transform.position;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == damageLayer)
         {
-            ApplyKnockback(collision);
+            ApplyKnockback(damageKnockback, collision);
         }
+    }
+    public void ApplyKnockback(float knockbackValue, Collision2D collision)
+    {
+
+        Vector2 force = new Vector2(collision.contacts[0].normal.x, collision.contacts[0].normal.y) * knockbackValue;
+        rigidBody.AddForce(force, ForceMode2D.Impulse);
     }
     private void FixedUpdate()
     {
@@ -180,22 +189,28 @@ public class Controller : MonoBehaviour
             if (Lives <= 0)
             {
                 Lives = maxHealth;
-                LoadState();
+                transform.position = lastPosition;
+                rigidBody.velocity = Vector2.zero;
+                RespawnEnemies();
             }
             StartCoroutine(BecomeInbulnerable());
             healthbar.SetHealth(Lives);
         }
     }
-    /// <summary>
-    /// This method pushes the player back after being hit.
-    /// The force applied is based on the direction of the collision.
-    /// </summary>
-    /// <param name="collision"></param>
-    public void ApplyKnockback(Collision2D collision)
+
+    private void RespawnEnemies()
     {
-        Vector2 force = new Vector2(collision.contacts[0].normal.x, collision.contacts[0].normal.y) * damageKnockback;
-        rigidBody.AddForce(force, ForceMode2D.Impulse);
+        //get all enemies and respawn them
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemies");
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.GetComponent<GroundEnemy>() != null)
+            {
+                enemy.GetComponent<GroundEnemy>().Respawn();
+            }
+        }
     }
+
     /// <summary>
     /// this method makes the player invulnerable for a set amount of time .
     /// </summary>

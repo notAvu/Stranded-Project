@@ -8,6 +8,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData 
 {
+    //public string CurrentScene { get; set; }
     public float[] PlayerPosition { get; set; }
     public int PlayerLives { get; set; }
 

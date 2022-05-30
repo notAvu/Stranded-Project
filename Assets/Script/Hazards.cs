@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Hazards : MonoBehaviour
 {
-    [SerializeField]
     private GrappleGun grapple;
 
     [SerializeField]
     private int damage = 5;
-
+    void Start()
+    {
+        grapple = FindObjectOfType<GrappleGun>();
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
