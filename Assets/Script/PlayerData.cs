@@ -11,6 +11,7 @@ public class PlayerData
     //public string CurrentScene { get; set; }
     public float[] PlayerPosition { get; set; }
     public int PlayerLives { get; set; }
+    public string SceneName { get; set; }
 
     public PlayerData(Controller player)
     {
@@ -19,5 +20,6 @@ public class PlayerData
         PlayerPosition[1] = player.transform.position.y;
         PlayerPosition[2] = player.transform.position.z;
         PlayerLives = player.Lives;
+        SceneName= player.gameObject.scene.name;
     }
 }

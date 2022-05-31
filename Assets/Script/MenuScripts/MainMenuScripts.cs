@@ -16,8 +16,14 @@ public class MainMenuScripts : MonoBehaviour
     /// Loads a scene given its name
     /// </summary>
     /// <param name="scene">The name of the scene you want to load</param>
-    public void LoadScene(string scene)
+    public void LoadScene()
     {
+
+        string scene="MainMenu";
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            scene = SaveSystem.LoadPlayer().SceneName;
+        }
         Debug.Log("Loading scene: " + scene);
         SceneManager.LoadScene(scene);
     }
@@ -26,7 +32,6 @@ public class MainMenuScripts : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
-        Debug.Log("Quitting game");
         Application.Quit();
     }
     /// <summary>
@@ -36,7 +41,7 @@ public class MainMenuScripts : MonoBehaviour
     /// <param name="scene">The name of the scene you want to load</param>
     public void DeleteData(string scene)
     {
-        Debug.Log("Deleting data");
+
         SaveSystem.DeleteFile();
         SceneManager.LoadScene(scene);
     }

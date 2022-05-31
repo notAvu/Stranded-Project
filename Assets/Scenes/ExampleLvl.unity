@@ -1401,7 +1401,7 @@ GameObject:
   - component: {fileID: 860250141}
   m_Layer: 0
   m_Name: Enemy Gang
-  m_TagString: Untagged
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

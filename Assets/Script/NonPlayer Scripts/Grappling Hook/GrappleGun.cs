@@ -60,6 +60,8 @@ public class GrappleGun : MonoBehaviour
             {
                 Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
                 RotateGun(mousePos);
+
+                Debug.DrawRay(transform.position, new Vector3(mousePos.x, mousePos.y), Color.red);
             }
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0))
