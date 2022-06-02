@@ -151,6 +151,8 @@ public class Controller : MonoBehaviour
         {
             Jump();
         }
+
+        myAnimator.SetBool("Jumping", !grounded);
     }
 
     #endregion
@@ -283,7 +285,6 @@ public class Controller : MonoBehaviour
         ApplyActualDrag();
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f);
         rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        myAnimator.SetTrigger("Jump");
     }
     /// <summary>
     /// Applies forces to the falling part of the character's jump arc to make it feel less floaty
@@ -304,7 +305,7 @@ public class Controller : MonoBehaviour
     /// </summary>
     private void CheckGrounded()
     {
-        grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);
+        grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);        
     }
     /// <summary>
     /// This method is just for visualizing the raycast that detects collisions with the ground
