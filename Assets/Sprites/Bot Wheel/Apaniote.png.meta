@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: 8106124103780660965
     second: Apaniote_5
+  - first:
+      213: 3646000444294368605
+    second: Apaniote_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -112,10 +115,10 @@ TextureImporter:
       name: Apaniote_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 133
-        width: 13
-        height: 20
+        x: 48
+        y: 164
+        width: 15
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,8 +136,8 @@ TextureImporter:
       name: Apaniote_1
       rect:
         serializedVersion: 2
-        x: 42
-        y: 133
+        x: 17
+        y: 128
         width: 13
         height: 20
       alignment: 0
@@ -154,10 +157,10 @@ TextureImporter:
       name: Apaniote_2
       rect:
         serializedVersion: 2
-        x: 59
-        y: 133
+        x: 33
+        y: 128
         width: 13
-        height: 18
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +178,10 @@ TextureImporter:
       name: Apaniote_3
       rect:
         serializedVersion: 2
-        x: 75
-        y: 132
+        x: 49
+        y: 129
         width: 13
-        height: 19
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,10 +199,10 @@ TextureImporter:
       name: Apaniote_4
       rect:
         serializedVersion: 2
-        x: 90
-        y: 132
+        x: 65
+        y: 128
         width: 13
-        height: 20
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,8 +220,8 @@ TextureImporter:
       name: Apaniote_5
       rect:
         serializedVersion: 2
-        x: 105
-        y: 132
+        x: 80
+        y: 128
         width: 13
         height: 20
       alignment: 0
@@ -230,6 +233,27 @@ TextureImporter:
       bones: []
       spriteID: 5e6f31f9cecbe7070800000000000000
       internalID: 8106124103780660965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Apaniote_6
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 128
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5d05153612399230800000000000000
+      internalID: 3646000444294368605
       vertices: []
       indices: 
       edges: []
