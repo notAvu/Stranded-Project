@@ -9,6 +9,7 @@ public class Controller : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
+    
     private BoxCollider2D playerCollider;
     [SerializeField]
     private Animator myAnimator;
@@ -265,6 +266,7 @@ public class Controller : MonoBehaviour
     /// <param name="dragValue"></param>
     private void ApplyDrag(float dragValue)
     {
+        
         if (Math.Abs(horizontalInput) < 0.4f || changinDirection)
         {
             rigidBody.drag = dragValue;

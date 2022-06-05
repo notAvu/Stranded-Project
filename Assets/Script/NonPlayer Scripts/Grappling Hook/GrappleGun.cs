@@ -11,7 +11,7 @@ public class GrappleGun : MonoBehaviour
     [SerializeField] private int grappableLayerNumber = 3;
 
     [Header("Main Camera:")]
-    public Camera m_camera; 
+    public Camera m_camera;
 
     [Header("Transform Ref:")]
     public Transform gunHolder;
@@ -31,11 +31,12 @@ public class GrappleGun : MonoBehaviour
 
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
-
+    private SpriteRenderer gunSprite;
     private void Start()
     {
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
+        gunSprite = GetComponent<SpriteRenderer>();
 
     }
 
@@ -46,14 +47,14 @@ public class GrappleGun : MonoBehaviour
             launchSpeed = activeLaunchSpeed;
         else
             launchSpeed = 0.7f;
-        
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
             SetGrapplePoint();
         //replace launch speed with active launch speed if the player is holding up
         else if (Input.GetKey(KeyCode.Mouse0))
         {
             if (grappleRope.enabled)
-            {   
+            {
                 RotateGun(grapplePoint);
             }
             else
@@ -94,8 +95,10 @@ public class GrappleGun : MonoBehaviour
     void RotateGun(Vector3 lookPoint)
     {
         Vector3 distanceVector = lookPoint - gunPivot.position;
-
+        
         float angle = Mathf.Atan2(distanceVector.y, distanceVector.x) * Mathf.Rad2Deg;
+
+        gunSprite.flipY = angle < Mathf.PI;
 
         gunPivot.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -107,7 +110,8 @@ public class GrappleGun : MonoBehaviour
     {
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
         RaycastHit2D raycastHasHit = Physics2D.Raycast(firePoint.position, distanceVector.normalized);
-
+        //draw the distancevector in game
+        Debug.DrawRay(firePoint.position, distanceVector.normalized * distanceVector.magnitude, Color.red);
         if (raycastHasHit)
         {
             if (raycastHasHit.transform.gameObject.layer == grappableLayerNumber)
@@ -150,7 +154,8 @@ public class GrappleGun : MonoBehaviour
         if (firePoint != null && hasMaxDistance)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(firePoint.position, maxDistanec);
+            //Gizmos.DrawWireSphere(firePoint.position, maxDistanec
+            //Debug.DrawRay(transform.position, new Vector3(distanceVector.x, distanceVector.y), Color.red);
         }
     }
 }
