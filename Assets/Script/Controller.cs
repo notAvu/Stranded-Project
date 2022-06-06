@@ -128,6 +128,8 @@ public class Controller : MonoBehaviour
         {
             SaveState();
             lastPosition = transform.position;
+            //trigger the animation for the checkpoint
+            collision.gameObject.GetComponent<Animator>().SetTrigger("Reached");
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)

@@ -97,8 +97,8 @@ public class GrappleGun : MonoBehaviour
         Vector3 distanceVector = lookPoint - gunPivot.position;
         
         float angle = Mathf.Atan2(distanceVector.y, distanceVector.x) * Mathf.Rad2Deg;
-
-        gunSprite.flipY = angle < Mathf.PI;
+        Debug.Log(angle);
+        gunSprite.flipY = angle < -90 || angle > 90;
 
         gunPivot.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 

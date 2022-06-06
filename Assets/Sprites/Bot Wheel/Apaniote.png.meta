@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: 3646000444294368605
     second: Apaniote_6
+  - first:
+      213: 388797042212149265
+    second: Apaniote_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -254,6 +257,27 @@ TextureImporter:
       bones: []
       spriteID: d5d05153612399230800000000000000
       internalID: 3646000444294368605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Apaniote_7
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 129
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11817c699d8456500800000000000000
+      internalID: 388797042212149265
       vertices: []
       indices: 
       edges: []
