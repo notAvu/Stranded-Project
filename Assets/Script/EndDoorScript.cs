@@ -7,15 +7,13 @@ using UnityEngine;
 /// </summary>
 public class EndDoorScript : MonoBehaviour
 {
-    [SerializeField]
-    private string nextScene = "MainMenu";
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.position = Vector3.zero;
             collision.gameObject.GetComponent<Controller>().SaveState();
-            SceneManager.LoadScene(nextScene, LoadSceneMode.Single);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Single);
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName(nextScene));
         }
     }
