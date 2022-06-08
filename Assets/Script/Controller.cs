@@ -7,13 +7,16 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
+    #region character components
     private Rigidbody2D rigidBody;
     private SpriteRenderer myRenderer;
-    
+
     private BoxCollider2D playerCollider;
     [SerializeField]
     private Animator myAnimator;
-    #region  variables
+    #endregion
+    #region damage variable
+
     [SerializeField]
     private float damageKnockback = 10f;
     [SerializeField]
@@ -28,8 +31,10 @@ public class Controller : MonoBehaviour
     #endregion
     #region X axis Movement variables
     [SerializeField] private GameObject parryBubble;
-    private float activeFrames = 0;
+    private bool parryAvailable;
+    [SerializeField] private float parryCoolDown = 1f;
     [SerializeField] private float acceleration;      //Example value= 50f
+    [SerializeField] private float parrySeconds = 0.5f;
     [SerializeField] private float maxSpeed;          //Example value= 12f
     [SerializeField] private float groundLinearDrag;  //Example value= 10f
     private float horizontalInput;
@@ -46,9 +51,10 @@ public class Controller : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private float raycastLength = 1f;
     private bool grounded;
+    #endregion
+    #region on start and enable
     private readonly Vector3 INITIAL_POSITION = new Vector3(0, 0, -10);
     private Vector3 lastPosition;
-    #endregion
     private void OnEnable()
     {
         if (SaveSystem.LoadPlayer() == null)
@@ -60,6 +66,7 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        parryAvailable = true;
         healthbar = FindObjectOfType<HealthbarUI>();
         rigidBody = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
@@ -67,6 +74,7 @@ public class Controller : MonoBehaviour
         healthbar.SetMaxHealth(Lives);
         LoadState();
     }
+    #endregion
     #region Loading and Saving
     /// <summary>
     /// Saves the current state of the player on a binary file 
@@ -100,28 +108,7 @@ public class Controller : MonoBehaviour
         ExecuteParry();
         CheckGrounded();
     }
-    /// <summary>
-    /// This methods checks if the player is able to parry and is inputing the parry button, if so enables the parry bubble.
-    /// Once active the parry bubble will be disabled after a set amount of time.
-    /// 
-    /// -- TODO : Set parry enabling/disabling to a corroutine -- 
-    /// </summary>
-    private void ExecuteParry()
-    {
-        if (activeFrames > 0f)
-            activeFrames--;
-        if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.DownArrow)) && activeFrames <= 0f)
-        {
-            activeFrames = 60f;
-            playerCollider.enabled = false;
-            EnableBubble();
-        }
-        if (parryBubble.GetComponent<CircleCollider2D>().enabled && activeFrames <= 20f)
-        {
-            playerCollider.enabled = true;
-            DisableBubble();
-        }
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals("Checkpoint"))
@@ -159,6 +146,7 @@ public class Controller : MonoBehaviour
     }
 
     #endregion
+    #region parry
     /// <summary>
     /// If parry bubble is not enabled it enalbles it and makes it visible.
     /// </summary>
@@ -168,6 +156,7 @@ public class Controller : MonoBehaviour
         {
             parryBubble.GetComponent<CircleCollider2D>().enabled = true;
             parryBubble.GetComponent<SpriteRenderer>().enabled = true;
+            playerCollider.enabled = false;
         }
     }
     /// <summary>
@@ -177,7 +166,35 @@ public class Controller : MonoBehaviour
     {
         parryBubble.GetComponent<CircleCollider2D>().enabled = false;
         parryBubble.GetComponent<SpriteRenderer>().enabled = false;
+        playerCollider.enabled = true;
     }
+    /// <summary>
+    /// This methods checks if the player is able to parry and is inputing the parry button, if so enables the parry bubble.
+    /// Once active the parry bubble will be disabled after a set amount of time.
+    /// </summary>
+    private void ExecuteParry()
+    {
+        if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.DownArrow)) && parryAvailable)
+        {
+            playerCollider.enabled = false;
+            EnableBubble();
+            parryAvailable = false;
+            StartCoroutine(DisableBubbleAfterTime());
+            StartCoroutine(CoolDownParry());
+        }
+    }
+
+    private IEnumerator DisableBubbleAfterTime()
+    {
+        yield return new WaitForSeconds(parrySeconds);
+        DisableBubble();
+    }
+    private IEnumerator CoolDownParry()
+    {
+        yield return new WaitForSeconds(parryCoolDown);
+        parryAvailable = true;
+    }
+    #endregion
     #region damage
     /// <summary>
     /// This method triggers the animation for taking damage. Then reduces the player's health by the hits parameter
@@ -268,7 +285,7 @@ public class Controller : MonoBehaviour
     /// <param name="dragValue"></param>
     private void ApplyDrag(float dragValue)
     {
-        
+
         if (Math.Abs(horizontalInput) < 0.4f || changinDirection)
         {
             rigidBody.drag = dragValue;
@@ -309,7 +326,7 @@ public class Controller : MonoBehaviour
     /// </summary>
     private void CheckGrounded()
     {
-        grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);        
+        grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);
     }
     /// <summary>
     /// This method is just for visualizing the raycast that detects collisions with the ground
