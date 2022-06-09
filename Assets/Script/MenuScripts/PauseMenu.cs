@@ -11,10 +11,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] 
     [Header("Main Menu Scene")]
     public string MAIN_MENU_NAME = "MainMenu";
-    //private void Awake()
-    //{
-    //    DontDestroyOnLoad(this);
-    //}
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !SceneManager.GetActiveScene().name.Equals(MAIN_MENU_NAME))

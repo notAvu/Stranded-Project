@@ -126,7 +126,7 @@ public class Controller : MonoBehaviour
             ApplyKnockback(damageKnockback, collision);
         }
     }
-    public void ApplyKnockback(float knockbackValue, Collision2D collision)
+    private void ApplyKnockback(float knockbackValue, Collision2D collision)
     {
 
         Vector2 force = new Vector2(collision.contacts[0].normal.x, collision.contacts[0].normal.y) * knockbackValue;
@@ -174,7 +174,7 @@ public class Controller : MonoBehaviour
     /// </summary>
     private void ExecuteParry()
     {
-        if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.DownArrow)) && parryAvailable)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightControl)) && parryAvailable)
         {
             playerCollider.enabled = false;
             EnableBubble();
@@ -202,7 +202,7 @@ public class Controller : MonoBehaviour
     /// layers to the player's starting lives.
     /// </summary>
     /// <param name="hits"></param>
-    public void GetHurt(int hits)
+    public void RecieveDamage(int hits)
     {
         if (!isInvulnerable)
         {
@@ -215,6 +215,7 @@ public class Controller : MonoBehaviour
                 rigidBody.velocity = Vector2.zero;
                 RespawnEnemies();
             }
+            
             StartCoroutine(BecomeInbulnerable());
             healthbar.SetHealth(Lives);
         }

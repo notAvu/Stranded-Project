@@ -21,10 +21,11 @@ public class GroundEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            collision.gameObject.GetComponentInChildren<GrappleGun>().Disbable();
             if (collision.collider.gameObject.GetComponent<Controller>() != null)
             {
-                collision.collider.gameObject.GetComponent<Controller>().GetHurt(Damage);
+                collision.gameObject.GetComponentInChildren<GrappleGun>().Disbable();
+                collision.collider.gameObject.GetComponent<Controller>().RecieveDamage(Damage);
+                
             }
         }
     }

@@ -12,22 +12,31 @@ public class Hazards : MonoBehaviour
     {
         grapple = FindObjectOfType<GrappleGun>();
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        HurtPlayer(collision);
+    }
     private void OnTriggerStay2D(Collider2D collision)
+    {
+        HurtPlayer(collision);
+    }
+
+    private void HurtPlayer(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            DealBaseDamage(collision);//Maybe it would be better to have the Controller script execute this logic. TODO Change grappling gun system to have the controller script use this
+            collision.gameObject.GetComponent<Controller>().RecieveDamage(damage);
             grapple.Disbable();
-
         }
     }
+
     /// <summary>
     /// Deals damage to the player and disables the player's active rope
     /// </summary>
     /// <param name="target"></param>
     private void DealBaseDamage(Collider2D target)
     {
-        target.gameObject.GetComponent<Controller>().GetHurt(damage);
+        
     }
 
 }

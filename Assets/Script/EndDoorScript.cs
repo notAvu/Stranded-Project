@@ -13,7 +13,14 @@ public class EndDoorScript : MonoBehaviour
         {
             collision.gameObject.transform.position = Vector3.zero;
             collision.gameObject.GetComponent<Controller>().SaveState();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Single);
+            if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
+            }
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName(nextScene));
         }
     }
