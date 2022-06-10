@@ -10,7 +10,7 @@
       <Field Name="healthbar" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="EndDoorScript">
+  <Class Name="EndDoorScript" Collapsed="true">
     <Position X="3.75" Y="3.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>

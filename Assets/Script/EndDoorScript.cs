@@ -18,10 +18,9 @@ public class EndDoorScript : MonoBehaviour
                 SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
             else
-            {
+            { 
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
             }
-            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(nextScene));
         }
     }
 }
