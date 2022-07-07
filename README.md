@@ -1,13 +1,15 @@
+This is a little game I made as a final project for class using Unity.
+My main goal was learning the basics of Unity 2D and game development 
+
 # Concept
 
-A fast paced, Momentum-based 2D platformer. 
+A fast paced, Momentum-based 2D platformer.
 
 # Main mechanics:	
 - Rope throwing and swinging 
-- A "parry-like" system based on timing to kill enemies	TODO: Still in progress
+- A "parry-like" system based on timing to kill enemies
 - <s> Health affects movement (Not sure of how just now, but I have a couple different ideas)	</s> [Update: I realised this idea is actually bad, may be interesting but I ain't got enough time to think of a proper way to implement it without level design being bland or extremely hard]
-- Natural forces (wind, water...) to mess with 	
-- Different surfaces with different properties 	
+- Natural forces (wind, water...) to mess with 		
 
 If i have enough time i'd like to implement:
 - An orb you can parry like an enemy that slows time for a short time
