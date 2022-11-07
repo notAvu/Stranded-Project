@@ -1,6 +1,7 @@
 This is a little game I made as a final project for class using Unity.
 My main goal was learning the basics of Unity 2D and game development 
 
+Download [0.1.0 version](https://github.com/notAvu/Stranded-Project/releases/tag/0.1.0)
 # Concept
 
 A fast paced, Momentum-based 2D platformer.
@@ -21,3 +22,11 @@ This is suposed to be a testing enviroment just for the mechanics, but these are
 
 - Since I may be short of time, the game will feature just the right amount of levels to showcase the mechanics, serving as some sort of "invisible tutorial"	
 - There'll be a couple of short levels for the player to get used to the main mechanics (Jumping, ropes, etc) and a bigger one with different game mechanics and enemies	
+# Controls 
+- A or left arrow - left
+- D or roght arrow - right 
+- Space - jump
+- Shift - Parry/Shield
+- left click - throw rope
+- esc - pause menu
+
