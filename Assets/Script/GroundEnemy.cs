@@ -19,27 +19,26 @@ public class GroundEnemy : MonoBehaviour
     private int direction = 1;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             if (collision.collider.gameObject.GetComponent<Controller>() != null)
             {
                 collision.gameObject.GetComponentInChildren<GrappleGun>().Disbable();
-                collision.collider.gameObject.GetComponent<Controller>().RecieveDamage(Damage);
-                
+                collision.collider.gameObject.GetComponent<Controller>().RecieveDamage(Damage);  
             }
         }
     }
     public void Die()
     {
         enemyRenderer.enabled = false;
-        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
     public void Respawn()
     {
         //set position to initial position
-        this.transform.position = new Vector2(initialPositionX, initialPositionY);
+        transform.position = new Vector2(initialPositionX, initialPositionY);
         enemyRenderer.enabled = true;
-        this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
     private void Start()
     {

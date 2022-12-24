@@ -29,14 +29,4 @@ public class Hazards : MonoBehaviour
             grapple.Disbable();
         }
     }
-
-    /// <summary>
-    /// Deals damage to the player and disables the player's active rope
-    /// </summary>
-    /// <param name="target"></param>
-    private void DealBaseDamage(Collider2D target)
-    {
-        
-    }
-
 }

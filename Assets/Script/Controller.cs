@@ -96,7 +96,6 @@ public class Controller : MonoBehaviour
             Lives = playerInfo.PlayerLives;
             healthbar.SetHealth(Lives);
             this.transform.position = new Vector3(playerInfo.PlayerPosition[0], playerInfo.PlayerPosition[1], playerInfo.PlayerPosition[2]);
-            Debug.Log("Player loaded from fun file");
         }
     }
     #endregion
@@ -115,7 +114,6 @@ public class Controller : MonoBehaviour
         {
             SaveState();
             lastPosition = transform.position;
-            //trigger the animation for the checkpoint
             collision.gameObject.GetComponent<Animator>().SetTrigger("Reached");
         }
     }
@@ -135,13 +133,12 @@ public class Controller : MonoBehaviour
     private void FixedUpdate()
     {
         MoveCharacter();
-        FallMultiplier();
+        rigidBody.gravityScale = rigidBody.velocity.y < 0 ? fallMultiplier : upwardsMultiplier;
         ApplyActualDrag();
         if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && grounded)
         {
             Jump();
         }
-
         myAnimator.SetBool("Jumping", !grounded);
     }
 
@@ -215,7 +212,6 @@ public class Controller : MonoBehaviour
                 rigidBody.velocity = Vector2.zero;
                 RespawnEnemies();
             }
-            
             StartCoroutine(BecomeInbulnerable());
             healthbar.SetHealth(Lives);
         }
@@ -227,10 +223,7 @@ public class Controller : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemies");
         foreach (GameObject enemy in enemies)
         {
-            if (enemy.GetComponent<GroundEnemy>() != null)
-            {
-                enemy.GetComponent<GroundEnemy>().Respawn();
-            }
+            enemy.GetComponent<GroundEnemy>()?.Respawn();
         }
     }
 
@@ -257,7 +250,6 @@ public class Controller : MonoBehaviour
         {
             myRenderer.flipX = horizontalInput < 0f;
         }
-
         if (Math.Abs(rigidBody.velocity.x) > maxSpeed)
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
@@ -309,25 +301,11 @@ public class Controller : MonoBehaviour
         rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
     /// <summary>
-    /// Applies forces to the falling part of the character's jump arc to make it feel less floaty
-    /// </summary>
-    private void FallMultiplier()
-    {
-        if (rigidBody.velocity.y < 0)
-        {
-            rigidBody.gravityScale = fallMultiplier;
-        }
-        else
-        {
-            rigidBody.gravityScale = upwardsMultiplier;
-        }
-    }
-    /// <summary>
     /// Checks if there is ground within a set distance from the center of the player's rigibody
     /// </summary>
     private void CheckGrounded()
     {
-        grounded = Physics2D.Raycast(transform.position * raycastLength, Vector2.down, raycastLength, groundLayer);
+        grounded = Physics2D.Raycast((transform.position * raycastLength), Vector2.down, raycastLength, groundLayer);
     }
     /// <summary>
     /// This method is just for visualizing the raycast that detects collisions with the ground
@@ -335,7 +313,7 @@ public class Controller : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * raycastLength);
+        Gizmos.DrawLine(transform.position, (transform.position + Vector3.down * raycastLength));
     }
     #endregion
 }

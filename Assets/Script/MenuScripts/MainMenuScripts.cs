@@ -18,7 +18,6 @@ public class MainMenuScripts : MonoBehaviour
     /// <param name="scene">The name of the scene you want to load</param>
     public void LoadScene()
     {
-
         string scene="MainMenu";
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -41,7 +40,6 @@ public class MainMenuScripts : MonoBehaviour
     /// <param name="scene">The name of the scene you want to load</param>
     public void DeleteData(string scene)
     {
-
         SaveSystem.DeleteFile();
         SceneManager.LoadScene(scene);
     }

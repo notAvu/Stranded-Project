@@ -9,7 +9,7 @@ public class EndDoorScript : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.transform.position = Vector3.zero;
             collision.gameObject.GetComponent<Controller>().SaveState();

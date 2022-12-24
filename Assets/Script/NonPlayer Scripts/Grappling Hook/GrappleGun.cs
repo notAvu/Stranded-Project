@@ -39,7 +39,6 @@ public class GrappleGun : MonoBehaviour
         gunSprite = GetComponent<SpriteRenderer>();
 
     }
-
     private void Update()
     {
         //TODO Esto se deberia implementar como un segundo tipo de cuerda que cambie el launchspeed
@@ -87,7 +86,6 @@ public class GrappleGun : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// sets the gun's rotation variable to the angle between the lookPoint and the x axis of the player
     /// </summary>

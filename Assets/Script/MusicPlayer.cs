@@ -17,12 +17,11 @@ public class MusicPlayer : MonoBehaviour
     void Start()
     {
         audioSource = FindObjectOfType<AudioSource>();
-        // play Assets/SFX/The Graveyard (LOOP).wav  if the scene name is MainMenu
+        // play Assets/SFX/The Graveyard (LOOP).wav if the scene name is MainMenu
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             audioSource.Stop();
             audioSource.clip = menuMusic;
-
         }
         else
         {
