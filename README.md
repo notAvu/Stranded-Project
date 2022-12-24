@@ -1,7 +1,7 @@
 This is a little game I made as a final project for class using Unity.
 My main goal was learning the basics of Unity 2D and game development 
 
-Download [0.1.0 version](https://github.com/notAvu/Stranded-Project/releases/tag/0.1.0)
+Download [0.1.0 version](https://github.com/notAvu/Stranded-Project/releases/tag/0.1.0)  
 [![CodeFactor](https://www.codefactor.io/repository/github/notavu/stranded-project/badge)](https://www.codefactor.io/repository/github/notavu/stranded-project)
 
 # Concept
